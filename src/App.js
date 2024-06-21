@@ -1,10 +1,10 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import Login from './component/Login'
-import Register from './component/Register'
-import Dashboard from './component/Dashboard'
+import Login from './page/login/index'
+import Register from './page/register/index'
 import Navbar from './component/Navbar'
 import NavbarLogin from './component/NavLogin'
+import HomeUser from './page/home-user/index'
 
 const App = () => {
   return (
@@ -18,9 +18,9 @@ const App = () => {
           <NavbarLogin />
           <Register />
         </Route>
-        <Route path="/dashboard">
+        <Route path="/home-user">
           <Navbar />
-          <Dashboard />
+          <HomeUser />
         </Route>
       </Switch>
 

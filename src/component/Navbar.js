@@ -1,55 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-
 const Navbar = () => {
+    const [profileData, setProfileData] = useState(null);
     const history = useHistory();
-    const Logout = async() => {
+
+    useEffect(() => {
+        const fetchProfileData = async () => {
+            try {
+                const response = await axios.get('http://localhost:3001/api/v1/user/login');
+                setProfileData(response.data.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchProfileData();
+    }, []);
+
+    const Logout = async () => {
         try {
-            await axios.delete('http://localhost:5000/logout')
-            history.push("/");
+            await axios.delete('http://localhost:5000/logout');
+            history.push('/');
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-
-    }
-
+    };
 
     return (
-        <nav className="navbar is-light" aria-label="main navigation">
+        <nav className="navbar is-white" aria-label="main navigation" style={{ borderBottom: '1px solid #d3d3d3', boxShadow: '0 2px 4px 0 rgba(0,0,0,.1)' }}>
             <div className='container'>
-                <div className="navbar-brand">
-                    <a className="navbar-item" href="https://bulma.io">
-                        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" alt="Bulma Logo" />
-                    </a>
-
-                    <a href="/" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </a>
-                </div>
-
                 <div id="navbarBasicExample" className="navbar-menu">
                     <div className="navbar-start">
-                        <a href="/dashboard" className="navbar-item">
-                            Home
+                        <a href="/#" className="navbar-item" style={{ fontFamily: 'Helvetica', fontWeight: 'bold' }}>
+                            Model Rekomendasi Skincare
                         </a>
                     </div>
                     <div className="navbar-end">
                         <div className="navbar-item">
-                            <div className="buttons">
-                                <button onClick={Logout} href="/" className="button is-light">
-                                    Logout
-                                </button>
-                            </div>
+                            {profileData && (
+                                <div className="buttons">
+                                    <img src={profileData.profilePhotoUrl} alt="Profile" className="is-rounded" style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }} />
+                                    <button onClick={Logout} className="button is-light">
+                                        Logout
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
         </nav>
     );
-}
+};
 
-export default Navbar
+export default Navbar;
