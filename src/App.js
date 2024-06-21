@@ -4,7 +4,6 @@ import Login from './page/login/index'
 import Register from './page/register/index'
 import Navbar from './component/Navbar'
 import NavbarLogin from './component/NavLogin'
-import HomeUser from './page/home-user/index'
 
 const App = () => {
   return (
@@ -20,7 +19,6 @@ const App = () => {
         </Route>
         <Route path="/home-user">
           <Navbar />
-          <HomeUser />
         </Route>
       </Switch>
 

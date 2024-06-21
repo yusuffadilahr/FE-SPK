@@ -23,10 +23,17 @@ const Login = () => {
         })
             .then((respons) => {
                 if (!respons) {
+                    console.log('SUUU', respons);
                     window.alert('Error Gagal Login, Terjadi Kesalahan');
                 }
                 if (respons.data.statusCode !== 200) {
                     window.alert(respons.data.message);
+                }
+                else {
+                    const {user_role, username} = respons.data.data;
+                    window.alert(respons.data.message);
+                    localStorage.setItem('role', user_role);
+                    localStorage.setItem('username', username);
                 }
                 if (respons.data.data.user_role === 'user') {
                     window.alert(respons.data.message);
